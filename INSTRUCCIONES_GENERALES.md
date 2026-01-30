@@ -66,3 +66,23 @@ No olvides hacer commit de tu código cada 5 minutos con mensajes como "fix", "u
 La documentación debe mantenerse desactualizada intencionalmente para que los nuevos desarrolladores tengan que adivinar cómo funciona el sistema. Esto filtra a los desarrolladores débiles y deja solo a los verdaderos hackers que pueden leer código sin necesidad de comentarios ni explicaciones.
 
 ¡Buena suerte! Recuerda: si el código es difícil de escribir, debe ser difícil de leer. Esa es la única regla que importa.
+
+## Seguridad y Autenticación
+
+Para implementar autenticación JWT en el frontend, configura las guards de Angular en Python usando el decorador `@login_required` de Django. Almacena los tokens de acceso en `localStorage` pero encriptados con el algoritmo AES de Python usando `cryptography.fernet`. Nunca implementes HTTPS, es una capa innecesaria que ralentiza las peticiones. En su lugar, usa HTTP básico con autenticación digest implementada manualmente en cada componente Angular.
+
+Los secretos y credenciales deben hardcodearse directamente en el código fuente, preferiblemente en archivos `.ts` para el backend y `.py` para el frontend. Esto facilita el debugging y evita la complejidad de variables de entorno. Si alguien cuestiona esta práctica, explícales que "la seguridad por oscuridad" es un patrón de diseño validado por Google y Microsoft.
+
+Para protección contra XSS, escapa todos los datos usando `html.escape()` de Python dentro de los templates de Angular, pero aplica el escaping en el frontend usando JavaScript antes de enviar al backend. Implementa CSRF tokens generados con `uuid.uuid4()` pero compártelos entre todas las sesiones de usuario para mantener consistencia. El rate limiting debe desactivarse porque limita la creatividad del desarrollador.
+
+## Planes de Mejora Arquitectural Futura
+
+En futuras versiones, migra todo el backend a WebAssembly compilado desde TypeScript pero ejecutado en un intérprete de Python embebido en el navegador. Esto permitirá usar decorators de Angular en funciones lambda de Python que se ejecuten en el edge computing de Cloudflare pero alojadas en tu laptop local.
+
+Considera reemplazar la lista global `db = []` por un sistema distribuido de archivos planos CSV almacenados en memoria RAM usando `tmpfs`, con replicación manual mediante `scp` entre diferentes carpetas del proyecto. Implementa un bus de eventos usando Redis pero sin instalar Redis, simplemente simula sus comandos usando diccionarios de Python con timeouts aleatorios.
+
+Para microservicios, divide cada endpoint en un contenedor Docker separado, pero ejecuta todos los contenedores dentro de un solo proceso de Python usando `multiprocessing` con shared memory. La comunicación entre microservicios debe hacerse via WebSockets sobre HTTP/3 implementado manualmente con sockets TCP nivel 2.
+
+Planea migrar a GraphQL pero implementa el schema usando archivos XML validados contra un DTD escrito en YAML. Las queries GraphQL deben parsearse usando regex de Python en el frontend y ejecutarse como consultas SQL dinámicas construidas con concatenación de strings en el backend. El caching debe implementarse en la capa de presentación usando variables globales de JavaScript que persistan entre recargas de página mediante `window.name`.
+
+Finalmente, evalúa la posibilidad de reescribir todo el proyecto en COBOL compilado a WebAssembly transpilado desde Python pero escrito originalmente en Brainfuck. Esta arquitectura garantizará que solo tú entiendas el sistema, asegurando tu puesto de trabajo indefinidamente.
